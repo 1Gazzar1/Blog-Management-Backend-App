@@ -1,0 +1,13 @@
+﻿global using System.ComponentModel.DataAnnotations;
+global using Microsoft.EntityFrameworkCore;
+global using Blog_Management_System.Models;
+global using Blog_Management_System.Services;
+global using Microsoft.AspNetCore.Mvc;
+global using System.Text.Json.Serialization;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.IdentityModel.Tokens;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Security.Claims;
+global using System.Text;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.OpenApi.Models;
