@@ -92,5 +92,17 @@
 
             return Ok(comments);
         }
+        [HttpGet("FilterPosts")]
+        [AllowAnonymous]
+        public async Task<ActionResult> FilterComments(string title, DateTime starting_time)
+        {
+            var posts = await _postservice
+                                  .Search_or_Filter_Posts(title, starting_time);
+            if (posts == null)
+            {
+                return BadRequest("Comment doesn't exist");
+            }
+            return Ok(posts);
+        }
     }
 }

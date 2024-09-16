@@ -11,6 +11,7 @@
         Task ApproveComment(int id);
         Task RejectComment(int id);
         Task <List<Comment>>GetApprovedComment();
+        Task<List<Comment>> Search_or_Filter_Comments(string content="",DateTime? createdtime = null);
     }
     public class CommentService : ICommentService
     {
@@ -71,6 +72,20 @@
             return await _Context.Comments
                                 .Where(c => c.Status == CommentStatus.Approved)
                                 .ToListAsync();
+        }
+        public async Task<List<Comment>> Search_or_Filter_Comments(string content = "", DateTime? createdtime = null)
+        {
+            var comments = await GetComments();
+            if (!String.IsNullOrWhiteSpace(content))
+            {
+                comments = comments.Where(c => c.Content.Contains(content) ).ToList();
+            }
+            if (createdtime != null)
+            {
+                comments = comments.Where(c => c.CreatedTime >= createdtime).ToList();
+            }
+            return comments;
+            
         }
 
     }   

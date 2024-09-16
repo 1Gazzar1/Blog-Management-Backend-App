@@ -10,6 +10,7 @@
         Task UpdatePost(int id, Post post);
         Task DeletePostByID(int id);
         Task<List<Comment>> GetApprovedCommentsByPostID(int postid);
+        Task<List<Post>> Search_or_Filter_Posts(string title = "", DateTime? createdtime = null);
 
     }
     public class PostService : IPostService
@@ -75,6 +76,20 @@
                                       .Where(c => c.Status == CommentStatus.Approved)
                                       .ToList();
             return comments;
+        }
+        public async Task<List<Post>> Search_or_Filter_Posts(string title = "", DateTime? createdtime = null)
+        {
+            var posts = await GetPosts();
+            if (!String.IsNullOrWhiteSpace(title))
+            {
+                posts = posts.Where(p => p.Title.Contains(title)).ToList();
+            }
+            if (createdtime != null)
+            {
+                posts = posts.Where(p => p.DateCreated >= createdtime).ToList();
+            }
+            return posts;
+
         }
     }
 }

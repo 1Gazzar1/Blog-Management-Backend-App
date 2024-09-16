@@ -84,5 +84,17 @@ namespace Blog_Management_System.Controllers
 
             return NoContent();
         }
+        [HttpGet("FilterUsers")]
+        [AllowAnonymous]
+        public async Task<ActionResult> FilterComments(string name)
+        {
+            var users = await _userservice
+                                       .Search_or_Filter_Users(name);
+            if (users == null)
+            {
+                return BadRequest("Comment doesn't exist");
+            }
+            return Ok(users);
+        }
     }
 }

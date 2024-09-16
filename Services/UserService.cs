@@ -11,7 +11,9 @@
         Task DeleteUserByID(int id);
         Task<User> Authenticate(string username, string password);
         string GenerateToken(User user);
-        
+        Task<List<User>> Search_or_Filter_Users(string name = "");
+
+
     }
     public class UserService : IUserService
     {
@@ -103,6 +105,17 @@
                 );
 
             return  new JwtSecurityTokenHandler().WriteToken(token);
+
+        }
+        public async Task<List<User>> Search_or_Filter_Users(string name = "")
+        {
+            var users = await GetUsers();
+            if (!String.IsNullOrWhiteSpace(name))
+            {
+                users = users.Where(p => p.Name.Contains(name)).ToList();
+            }
+            
+            return users;
 
         }
 

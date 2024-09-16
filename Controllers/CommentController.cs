@@ -92,6 +92,18 @@ namespace Blog_Management_System.Controllers
             var comments = await _commentservice.GetApprovedComment();
             return Ok(comments);
         }
-
+        [HttpGet("FilterComments")]
+        [AllowAnonymous]
+        public async Task<ActionResult> FilterComments(string content, DateTime starting_time)
+        {
+            var comments = await _commentservice
+                                            .Search_or_Filter_Comments(content,starting_time);
+            if (comments == null)
+            {
+                return BadRequest("Comment doesn't exist");
+            }
+            return Ok(comments);
+        }
+        
     }
 }
